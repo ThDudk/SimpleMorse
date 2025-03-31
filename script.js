@@ -176,7 +176,7 @@ let updateSliderBar = () => {
         sliderBarItems[i].setAttribute("filled", historyItem);
         
         console.log(getTrailingNumber(i))
-        if(historyItem && getTrailingFilled(i) > 3 || !historyItem && getTrailingBreaks(i) > 7) 
+        if(historyItem && getTrailingFilled(i) > 3 || (historyItem && getTrailingFilled(i) == 2 && i != 0) || !historyItem && getTrailingBreaks(i) > 7) 
             sliderBarItems[i].setAttribute("warning", true);
     }
 }
