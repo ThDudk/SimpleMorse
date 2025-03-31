@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple morse</title>
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Comfortaa Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 
+    Elements Involved:
+    - Header (1 and 2) <done>
+    - Slider bar <done>
+    - Text <done>
+    - Button <done>
+    - Text Boxes <done>
+    - Popup Menu
+    - Toggle
+    - Desktop split screen
+    -->
+    <header><h1><i class="fa-solid fa-stop"></i> Simple Morse</h1></header>
+
+    <div id="root">
+        <div id="left">
+            <div id="slider-bar">
+                <div slider-num="7"></div>
+                <div slider-num="6"></div>
+                <div slider-num="5"></div>
+                <div slider-num="4"></div>
+                <div slider-num="3"></div>
+                <div slider-num="2"></div>
+                <div slider-num="1"></div>
+                <div id="slider-bar-curr"></div>
+            </div>
+        
+            <div id="bpm-menu">
+                <h3 id="beginner-mode" on="false"><i class="fa-solid fa-toggle-off"></i> <i class="fa-solid fa-toggle-on"></i> Beginner Mode</h3>
+                <h3>BPM: <input type="number" id="bpm-input" min="1" max="600" step="5" value="120" placeholder="1"></h3>    
+            </div>
+        
+            <div id="buttons">
+                <button id="next-letter"><i class="fa-solid fa-caret-right"></i> <span>Next letter</span></button>
+                <button id="next-word"><i class="fa-solid fa-minus fa-underscore"></i> <span>Next word</span></button>
+                <button onclick="backspace()"><i class="fa-solid fa-delete-left"></i> <span>Backspace</span></button>
+            </div>
+        
+            <div id="tap-here">
+                <div class="disable-select">
+                    <h2><i class="fa-solid fa-hand-pointer"></i> Tap Here</h2>
+                </div>
+            </div>
+            <button onclick="stop()"><span><i class="fa-solid fa-ban"></i> Stop</span></button>        
+        </div>
+        <div id="right">
+            <h2 style="margin-top: 0;">English</h2>
+            <div class="text-box" id="english-text-box">
+                <p class="text-content"></p>
+                <i class="fa-solid fa-copy text-box-copy"></i>
+            </div>
+        
+            <h2>Morse Code</h2>
+            <div class="text-box" id="morse-code-text-box">
+                <p class="text-content"></p>
+                <i class="fa-solid fa-copy text-box-copy"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="guide" class="dark-bg">
+        <h1>How to write morse code</h1>
+        <blockquote>
+            Morse code is a telecommunications method which encodes text characters as standardized sequences of two different signal durations, called dots and dashes, or dits and dahs.
+            <p style="margin-top: 0.4em;">- wikipedia</p>
+        </blockquote>
+
+        <p>Morse code is composed of two inputs. Dits and Dahs.</p>
+        <ul>
+            <li>Dits last for one time unit.</li>
+            <li>Dahs last for three time units.</li>
+        </ul>
+        <p>
+            A letter is composed of dits and dahs, seperated by 1 time unit. For example, "a" in morse code is:
+            <ul> 
+                <li>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                </li>
+                <li>
+                    or ".-"
+                </li>
+            </ul>
+        </p>
+        <p>
+            Words are composed of letters, seperated by three time units. For example the word "an" in morse code is:
+            <ul> 
+                <li>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span> <span class="square" filled="false"></span> <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                </li>
+                <li>
+                    or ".- -."
+                </li>
+            </ul>
+        </p>
+        <p>
+            Finally sentances are composed of words, seperated by 7 time units. So the sentance "an ant" in morse code is:
+            <ul>
+                <li>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span> <span class="square" filled="false"></span> <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span> <span class="square" filled="false"></span> <span class="square" filled="false"></span> <span class="square" filled="false"></span> <span class="square" filled="false"></span> <span class="square" filled="false"></span> <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span> <span class="square" filled="false"></span> <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span> <span class="square" filled="false"></span> <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                    <span class="square" filled="false"></span>
+                    <span class="square" filled="true"></span>
+                </li>
+                <li>
+                    or ".- -. / .- -. ..."
+                </li>
+            </ul>
+        </p>
+
+        <h1>Cheat sheet</h1>
+        <img src="cheatsheet.png">
+        <p class="secondary">Source: <a href="https://www.carddia.com/pages/resource-download-international-morse-code">carddia.com</a></p>
+    </div>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/e44e5ab538.js" crossorigin="anonymous"></script>
+
+    <script src="script.js"></script>
+    <script>
+        document.querySelectorAll("span.square").forEach((element) => {
+            if(element.getAttribute("filled") == "true") {
+                element.innerHTML = '<i class="fa-solid fa-square"></i>'
+            } else {
+                element.innerHTML = '<i class="fa-regular fa-square"></i>'
+            }
+        })
+    </script>
+</body>
+</html>

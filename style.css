@@ -1,0 +1,233 @@
+:root {
+    --light: #f9f5ff;
+    --light-accent: #957dff;
+    --main: #ac91f6;
+    --dark-accent: #553791;
+    --dark: #22182c;
+    --warning: #ff7d7d;
+}
+.secondary {
+    color: var(--main);
+}
+.secondary a {
+    color: var(--main);
+}
+.secondary-clickable:hover {
+    color: var(--light-accent);
+}
+
+.dark-bg {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+@media only screen and (min-width: 750px) {
+    #root {
+        display: flex;
+        height: 100vh;
+        gap: 2em;
+    }
+    #root > #left, #root > #right{
+        flex: 1;
+    }
+    #root > #right {
+        padding-top: 0!important;
+    }
+}
+#root {
+    height: fit-content;
+    padding: 2em;
+    padding-top: 0;
+}
+#root > #right {
+    padding-top: 2em;
+}
+
+body {
+    font-family: "Comfortaa";
+    background-color: var(--light);
+    font-size: 1.2em;
+    margin: 0;
+    color: var(--dark);
+    line-height: 2.5ch;
+}
+header {
+    padding: 1em;
+    margin-bottom: 1em;
+}
+h1, h2, h3, p {
+    margin: 0;
+}
+h1 {
+    font-size: 2em;
+}
+h2 {
+    font-size: 1.5em;
+    margin-block: 0.5em 0.2em;
+}
+h3 {
+    font-size: 1em;
+    margin-block: 0.5em;
+}
+p {
+    margin-top: 0.5em;
+}
+img {
+    width: 100%;
+    margin-top: 1em;
+    border-radius: 0.5em;
+    border: none;
+}
+
+.disable-select{
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+
+    pointer-events:none;
+}
+
+#bpm-menu {
+    display: flex;
+    justify-content: space-between;
+}
+
+#beginner-mode {
+    cursor: pointer;
+}
+#beginner-mode[on="true"] > .fa-toggle-off, #beginner-mode[on="false"] > .fa-toggle-on {
+    display: none;
+}
+
+*:has(#beginner-mode[on="false"]) ~ #buttons {
+    display: none;
+} 
+
+input[type="number"] {
+    font-size: 1em;
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+    text-decoration-color: var(--light-accent);
+    width: 2em;
+    padding: 0;
+
+    /* hide side arrows on Mozilla */
+    -moz-appearance: textfield;
+    appearance: textfield;
+    margin: 0; 
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { 
+    /* Hide side arrows on Chrome */
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+#slider-bar {
+    --spacing: 0.5em;
+    --num-row-items: 8;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 5;
+    align-content: stretch;
+    flex-direction: row-reverse column-reverse;
+
+    gap: var(--spacing);
+}
+#slider-bar > div {
+    flex: 1 0 calc(100% / var(--num-row-items) - 2 * var(--spacing));
+    aspect-ratio: 1 / 1;
+
+    border: 0.2em solid black;
+    border-radius: 0.5em;
+    background-color: var(--main);
+}
+#slider-bar > div[filled=true] {
+    background-color: var(--dark);
+}
+#slider-bar > div[warning=true] {
+    border-color: var(--warning);
+}
+#slider-bar > #slider-bar-curr {
+    border-style: dotted;
+}
+#slider-bar > #slider-bar-curr[filled=true] {
+    background-color: var(--dark);
+    border-color: var(--light);
+}
+
+#tap-here {
+    border: 0.2em dotted var(--dark);
+    border-radius: 2em;
+    height: 30vh;
+    margin-block: 1.5em 1em;
+    padding: auto;
+    position: relative;
+    cursor: pointer;
+}
+#tap-here > div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    transition: font-size 250ms cubic-bezier(0,1.05,.89,1.09);
+}
+#tap-here:active > div {
+    font-size: 0.9em;
+}
+
+button {
+    background-color: var(--main);
+    border: 0.2em solid var(--dark);
+    border-radius: 0.5em;
+    padding: 0.25em;
+    font-size: 1em;
+    text-align: left;
+    flex: 1;
+    transition: flex 250ms cubic-bezier(0,1.05,.89,1.09);
+}
+button:hover {
+    background-color: var(--light-accent);
+    cursor: pointer;
+}
+button:active {
+    background-color: var(--dark-accent);
+}
+
+#buttons {
+    display: flex;
+    gap: 0.5em;
+}
+
+.fa-minus.fa-underscore{
+    transform: translateY(0.5ch);
+}
+
+.text-box {
+    border-radius: 0.5em;
+    border: 0.2em solid var(--dark);
+    height: 10ch;
+    padding: 0.5em;
+    position: relative;
+    cursor: pointer;
+}
+.text-box .text-box-copy {
+    position: absolute;
+    top: 0.3em;
+    right: 0.3em;
+}
+
+
+#guide {
+    padding: 2em;
+}
+blockquote {
+    border-left: 0.2em solid var(--light-accent);
+    padding-left: 1em;
+    margin-left: 0;
+}
