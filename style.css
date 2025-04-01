@@ -9,7 +9,7 @@
 .secondary {
     color: var(--main);
 }
-.secondary a {
+a {
     color: var(--main);
 }
 .secondary-clickable:hover {

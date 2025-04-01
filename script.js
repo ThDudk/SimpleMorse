@@ -44,6 +44,9 @@ document.getElementById("beginner-mode").onclick = (event) => {
 }
 document.getElementById("next-letter").onclick = () => setTrailingBreaks(3);
 document.getElementById("next-word").onclick = () => setTrailingBreaks(7);
+document.addEventListener("keydown", (event) => {if(event.key == "l") setTrailingBreaks(3)})
+document.addEventListener("keydown", (event) => {if(event.key == "w") setTrailingBreaks(7)})
+document.addEventListener("keydown", (event) => {if(event.key == "Backspace") backspace()})
 
 let getTrailingNumber = (offset) => {
     offset = (offset == undefined) ? 0 : offset;
@@ -130,6 +133,7 @@ let pressSources = new Set();
 let addPress = (event) => {
     start(); // start up the slider if not already started
     if(event instanceof KeyboardEvent) {
+        if(event.key == "l" || event.key == "w" || event.key == "Backspace") return;
         pressSources.add(event.code);
     } else {
         pressSources.add("mousePress");
@@ -148,10 +152,15 @@ let isPressed = () => {
     return pressSources.size > 0
 }
 
+// for keyboard
 document.getElementById("tap-here").addEventListener("mousedown", addPress);
 document.getElementById("tap-here").addEventListener("mouseup", removePress);
 document.addEventListener("keydown", addPress)
 document.addEventListener("keyup", removePress)
+
+// for mobile
+document.getElementById("tap-here").addEventListener("pointerdown", addPress);
+document.getElementById("tap-here").addEventListener("pointerup", removePress);
 
 
 
@@ -175,7 +184,6 @@ let updateSliderBar = () => {
         let historyItem = history[history.length - 1 - i];
         sliderBarItems[i].setAttribute("filled", historyItem);
         
-        console.log(getTrailingNumber(i))
         if(historyItem && getTrailingFilled(i) > 3 || !historyItem && getTrailingBreaks(i) > 7) 
             sliderBarItems[i].setAttribute("warning", true);
     }
@@ -248,10 +256,9 @@ let morseCodeToEnglishRef = {
     "-----": "0", ".----": "1", "..---": "2", "...--": "3", "....-": "4",
     ".....": "5", "-....": "6", "--...": "7", "---..": "8", "----.": "9",
 
-    ".-.-.-": ".", "--..--": ",", "..--..": "?",  "-.-.--": "!", "-....-": "-",
-    ".----.": "'", "-..-.": "/",  ".-..-.": "\"", ".--.-.": "@", "-...-": "=",
-    "-.-.-.": ";", "---...": ":", "-.-.-": "+",   "-..-.-": "$", ".-.-.": "&",
-    ".-..-.": "(", "-.--.": ")",  "---.-": "*",   ".-.-.-": "."
+    ".-...": "&",  ".----.": "'", ".--.-.": "@", "-.--.-": ")", "-.--.": "(",
+    "---...": ":", "--..--": ",", "-...-": "=",  ".-.-.-": ".", "-....-": "-",
+    ".-.-.": "+",  ".-..-.": '"', "..--..": "?", "-..-.": "/",
 }
 
 /**
